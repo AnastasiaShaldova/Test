@@ -8,9 +8,6 @@ class _Settings(pydantic.BaseSettings):
 
 
 class Settings(_Settings):
-    # Auth
-    X_API_TOKEN: pydantic.SecretStr
-    SIGNUP_API_TOKEN: pydantic.SecretStr
 
     # PostgresQL
     POSTGRES_HOSTNAME: str
@@ -18,9 +15,6 @@ class Settings(_Settings):
     POSTGRES_USER: str
     POSTGRES_PASSWORD: pydantic.SecretStr
     POSTGRES_PORT: pydantic.PositiveInt
-
-    # Secret key for JWT
-    SECRET_KEY: pydantic.SecretStr
 
     # Server mode
     DEBUG: bool
