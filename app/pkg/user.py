@@ -9,17 +9,15 @@ async def user_add(user_details: User):
     """
     try:
         async with db_connect.connect() as conn:
-            async with conn.transaction():
-                result = await conn.cursor(
-                    "INSERT INTO public.users(name, gender) VALUES ($1, $2) , user_details.name, user_details.gender)")
-                res = await result.fetchrow()
-                return int(res["id"])
-
+            await conn.execute(
+                "INSERT INTO public.users(user_name, gender) VALUES ($1, $2);",
+                user_details.user_name, user_details.gender)
+            return True
     except Exception:
-        return -1
+        return False
 
 
-async def get_user_by_name(name: str):
+async def get_user_by_name(user_name: str):
     """
     Функция ищет пользователя по имени
     name: имя пользователя
@@ -28,8 +26,8 @@ async def get_user_by_name(name: str):
     """
     async with db_connect.connect() as conn:
         users = await conn.fetchone(
-            f"SELECT name FROM public.users WHERE name = $1 ORDER BY name LIMIT 1",
-            name)
+            f"SELECT id, user_name, gender FROM public.users WHERE user_name = $1 ORDER BY user_name LIMIT 1",
+            user_name)
 
         if users:
             return users[0]
@@ -45,9 +43,11 @@ async def users_get():
     async with db_connect.connect() as conn:
         users = await conn.fetch(
             f"SELECT * FROM public.users")
-
         if users:
             return users
         return None
+
+
+
 
 

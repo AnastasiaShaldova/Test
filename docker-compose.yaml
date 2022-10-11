@@ -1,0 +1,16 @@
+version: "3.3"
+
+services:
+  endpoints:
+    container_name: test_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    ports:
+      - 3114:3114
+#  postgres:
+
+
