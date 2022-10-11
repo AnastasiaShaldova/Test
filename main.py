@@ -32,5 +32,3 @@ async def _get_captcha_text(request: Request):
     if captcha.is_captcha_valid(request.headers.get('text', ''), request.headers.get('get_uuid', '')):
         return JSONResponse(content='OK', status_code=200)
     return JSONResponse(content='Error', status_code=200)
-
-
